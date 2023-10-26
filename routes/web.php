@@ -31,8 +31,7 @@ Route::get('/','FrontendController@home')->name('home');
 
 // Frontend Routes
 Route::get('/home', 'FrontendController@index');
-Route::get('/contact','FrontendController@contact')->name('contact');
-Route::post('/contact/message','MessageController@store')->name('contact.store');
+
 Route::get('product-detail/{slug}','FrontendController@productDetail')->name('product-detail');
 Route::post('/product/search','FrontendController@productSearch')->name('product.search');
 Route::get('/product/search','FrontendController@productSearch')->name('product.search');
@@ -49,8 +48,7 @@ Route::match(['get','post'],'/filter','FrontendController@productFilter')->name(
 Route::get('/product/track','OrderController@orderTrack')->name('order.track');
 Route::post('product/track/order','OrderController@productTrackOrder')->name('product.track.order');
 
-// NewsLetter
-Route::post('/subscribe','FrontendController@subscribe')->name('subscribe');
+
 
 // Product Review
 Route::resource('/review','ProductReviewController');
@@ -69,13 +67,7 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     })->name('file-manager');
     // user route
     Route::resource('users','UsersController');
-    // Banner
-    Route::resource('banner','BannerController');
-    // Brand
-    Route::resource('brand','BrandController');
-    // Profile
-    Route::get('/profile','AdminController@profile')->name('admin-profile');
-    Route::post('/profile/{id}','AdminController@profileUpdate')->name('profile-update');
+ 
     // Category
     Route::resource('/category','CategoryController');
     // Cart
@@ -90,6 +82,18 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     // Message
     Route::resource('/message','MessageController');
     Route::get('/message/five','MessageController@messageFive')->name('messages.five');
+
+
+    // Order
+    Route::resource('/order','OrderController');
+    // Shipping
+    Route::resource('/shipping','ShippingController');
+    // Coupon
+    Route::resource('/coupon','CouponController');
+    // Settings
+    Route::get('settings','AdminController@settings')->name('settings');
+    Route::post('setting/update','AdminController@settingsUpdate')->name('settings.update');
+
     // Password Change
     Route::get('change-password', 'AdminController@changePassword')->name('change.password.form');
     Route::post('change-password', 'AdminController@changPasswordStore')->name('change.password');
