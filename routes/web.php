@@ -32,8 +32,6 @@ Route::get('/','FrontendController@home')->name('home');
 // Frontend Routes
 Route::get('/home', 'FrontendController@index');
 Route::get('/about-us','FrontendController@aboutUs')->name('about-us');
-Route::get('/contact','FrontendController@contact')->name('contact');
-Route::post('/contact/message','MessageController@store')->name('contact.store');
 Route::get('product-detail/{slug}','FrontendController@productDetail')->name('product-detail');
 Route::post('/product/search','FrontendController@productSearch')->name('product.search');
 Route::get('/product/search','FrontendController@productSearch')->name('product.search');
@@ -66,24 +64,13 @@ Route::match(['get','post'],'/filter','FrontendController@productFilter')->name(
 // Order Track
 Route::get('/product/track','OrderController@orderTrack')->name('order.track');
 Route::post('product/track/order','OrderController@productTrackOrder')->name('product.track.order');
-// Blog
-Route::get('/blog','FrontendController@blog')->name('blog');
-Route::get('/blog-detail/{slug}','FrontendController@blogDetail')->name('blog.detail');
-Route::get('/blog/search','FrontendController@blogSearch')->name('blog.search');
-Route::post('/blog/filter','FrontendController@blogFilter')->name('blog.filter');
-Route::get('blog-cat/{slug}','FrontendController@blogByCategory')->name('blog.category');
-Route::get('blog-tag/{slug}','FrontendController@blogByTag')->name('blog.tag');
 
-// NewsLetter
-Route::post('/subscribe','FrontendController@subscribe')->name('subscribe');
+
 
 // Product Review
 Route::resource('/review','ProductReviewController');
 Route::post('product/{slug}/review','ProductReviewController@store')->name('review.store');
 
-// Post Comment
-Route::post('post/{slug}/comment','PostCommentController@store')->name('post-comment.store');
-Route::resource('/comment','PostCommentController');
 // Coupon
 Route::post('/coupon-store','CouponController@couponStore')->name('coupon-store');
 // Payment
@@ -102,13 +89,7 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     })->name('file-manager');
     // user route
     Route::resource('users','UsersController');
-    // Banner
-    Route::resource('banner','BannerController');
-    // Brand
-    Route::resource('brand','BrandController');
-    // Profile
-    Route::get('/profile','AdminController@profile')->name('admin-profile');
-    Route::post('/profile/{id}','AdminController@profileUpdate')->name('profile-update');
+ 
     // Category
     Route::resource('/category','CategoryController');
     // Cart
@@ -138,10 +119,6 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     Route::get('settings','AdminController@settings')->name('settings');
     Route::post('setting/update','AdminController@settingsUpdate')->name('settings.update');
 
-    // Notification
-    Route::get('/notification/{id}','NotificationController@show')->name('admin.notification');
-    Route::get('/notifications','NotificationController@index')->name('all.notification');
-    Route::delete('/notification/{id}','NotificationController@delete')->name('notification.delete');
     // Password Change
     Route::get('change-password', 'AdminController@changePassword')->name('change.password.form');
     Route::post('change-password', 'AdminController@changPasswordStore')->name('change.password');
